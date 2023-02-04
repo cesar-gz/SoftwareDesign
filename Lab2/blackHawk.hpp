@@ -1,20 +1,42 @@
 // declaration file
-
 #pragma once
+#include <vector>
 
 class blackHawk{
   private:
-    int m_year {};
-    int m_month {};
-    int m_day {};
+    int  feature;
+    int  purchase;
+    int  year;
+    std::string color;
+    std::string name;
+    bool   power;
+    bool sessionIsActive;
+    std::vector<blackHawk> garage;
 
   public:
-    blackHawk( int year, int month, int day );
+    int option;
 
-    void SetDate( int year, int month, int day );
-    void printDate( blackHawk& date );
+    blackHawk();
+    blackHawk(int year, std::string color, std::string name);
 
-    int  getYear();
-    int  getMonth();
-    int  getDay();
+    int   mainMenu();
+
+    void  customizeCar(int Year, std::string Color, std::string Name);
+    void  addToGarage( blackHawk x);
+    void  showCars();
+    blackHawk selectCar(int x);
+
+    void  setActive( bool y );
+    void  setFeature( int x );
+    void  setPurchase( int x );
+    void  setPower( int x );
+
+    int   getFeature();
+    bool  getActive();
+    bool  getPurchase();
+    bool  getPower();
+    int   getYear();
+    std::string getColor();
+    std::string getName();
 };
+
