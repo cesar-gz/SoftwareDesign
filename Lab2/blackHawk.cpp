@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib> // for generating random numbers for setReport()
 
 #include "blackHawk.hpp"
 
@@ -21,18 +22,20 @@ int blackHawk::mainMenu()
     std::cout << "1) Buy a BlackHawk car for $250,000" << '\n';
     std::cout << "2) Compare my purchased cars" << '\n';
     std::cout << "3) Drive a purchased car (Test the Features)" << '\n';
-    std::cout << "4) Leave the store" << '\n';
+    std::cout << "4) Generate a report for a car" << '\n';
+    std::cout << "5) Sell a car back to us for half the price" << '\n';
+    std::cout << "6) Leave the store" << '\n';
     std::cout << "Your choice: ";
     std::cin >> option;
     std::cout << '\n';
 
-    if( option == 1 || option == 2 || option == 3 || option == 4 )
+    if( option == 1 || option == 2 || option == 3 || option == 4 || option == 5 || option == 6 )
     {
       return option;
     }
     else
     {
-      std::cout << "Please enter 1, 2, 3, or 4." << '\n';
+      std::cout << "Please enter 1, 2, 3, 4, 5, or 6." << '\n';
     }
   }
 }
@@ -74,6 +77,14 @@ void blackHawk::customizeCar(int Year, std::string Color, std::string Name){
   color = Color;
   name  = Name;
 
+  srand(static_cast<unsigned>(time(NULL)));
+  randomMileage = rand() % 250000; // generate mileage from 0-250,000
+  srand(static_cast<unsigned>(time(NULL)));
+  randomGasTank = 1 + rand() % 10;  // generate gas tank size from 1/10 to 10/10
+  srand(static_cast<unsigned>(time(NULL)));
+  randomCondition = 1 + rand() % 4; // generate random condition from 1 to 4
+  setReport(randomMileage, randomGasTank, randomCondition);
+
   std::cout << "Congratulations, you are the owner of a " << '\n';
   std::cout << getYear() << " " << getColor() << " " << getName() << '\n';
   std::cout << '\n';
@@ -96,19 +107,139 @@ void blackHawk::showCars(){
   }
   else{
     std::cout << "This is what is in your garage: " << '\n';
-    for( int i = 0; i < (int)(garage.size()); i++ )
+    for (int i = 0; i < static_cast<int>(garage.size()); i++)
     {
       std::cout << garage[i].getYear() << " " << garage[i].getColor() << " " << garage[i].getName() << '\n';
     }
+    std::cout << '\n';
   }
 }
 
 blackHawk blackHawk::selectCar(int x){
   std::cout << "Which car would you like to pick out?" << '\n';
-  std::cout << "Enter 1 for the first car, 2 for the second car, 3 for . . ." << '\n';
+  std::cout << "Enter 1 for the first car, 2 for the second car, 3 for ..." << '\n';
   std::cin >> x;
+  std::cout << '\n';
 
-  return garage.at( x );
+  return garage.at( x-1 );
+}
+
+void blackHawk::queryClient(){
+  while(true){
+    std::cout << "(A) Would you like a report without the start date and end date of the purchase/lease?" << '\n'
+              << "(B) A report with just the start date of purchase/lease?" << '\n'
+              << "(C) Or a report just the start date and end date of the purchase/lease?" << '\n';
+    std::cout << "Enter 1 for option A" << '\n'
+              << "Enter 2 for option B" << '\n'
+              << "Enter 3 for option C" << '\n';
+    std::cin >> result;
+    std::cout << '\n';
+
+    if (result == 1)
+    {
+      generateReport();
+      break;
+    }
+    else if (result == 2)
+    {
+      generateReport( true );
+      break;
+    }
+    else if (result == 3)
+    {
+      generateReport( true, true );
+      break;
+    }
+    else{
+      std::cout << "Please choose a valid option" << '\n';
+      std::cout << '\n';
+    }
+  }
+}
+
+void blackHawk::generateReport (){
+
+  if (garage.size() <= 0)
+  {
+    std::cout << "You have no cars with us. Buy one." << '\n';
+    std::cout << '\n';
+  }
+  else
+  {
+    std::cout << "Generating a full report for your cars now. (Printing)" << '\n';
+    std::cout << '\n';
+    std::cout << "-------------------------------------------" << '\n';
+    for (int i = 0; i < static_cast<int>(garage.size()); i++)
+    {
+      std::cout << garage[i].getYear() << " "
+                << garage[i].getColor() << " "
+                << garage[i].getName() << '\n';
+      std::cout << garage[i].randomMileage << " miles on the vehicle currently" << '\n'
+                << garage[i].randomGasTank << "/10 tank full" << '\n'
+                << "The cars condition is: " << garage[i].carsHealth << '\n';
+      std::cout << '\n';
+    }
+    std::cout << "-------------------------------------------" << '\n';
+    std::cout << '\n';
+  }
+}
+
+void blackHawk::generateReport( bool x ){
+  startDateWanted = x;
+  if (garage.size() <= 0)
+  {
+    std::cout << "You have no cars with us. Buy one." << '\n';
+    std::cout << '\n';
+  }
+  else
+  {
+    std::cout << "Generating a report with a start date for your cars now. (Printing)" << '\n';
+    std::cout << '\n';
+    std::cout << "-------------------------------------------" << '\n';
+    for (int i = 0; i < static_cast<int>(garage.size()); i++)
+    {
+      std::cout << "Car first purchased on the year of " << garage[i].getStartDate() << '\n'
+                << garage[i].getYear() << " "
+                << garage[i].getColor() << " "
+                << garage[i].getName() << '\n';
+      std::cout << garage[i].randomMileage << " miles on the vehicle currently" << '\n'
+                << garage[i].randomGasTank << "/10 tank full" << '\n'
+                << "The cars condition is: " << garage[i].carsHealth << '\n';
+      std::cout << '\n';
+    }
+    std::cout << "-------------------------------------------" << '\n';
+    std::cout << '\n';
+  }
+}
+
+void blackHawk::generateReport( bool y , bool z ){
+  startDateWanted = y;
+  endDateWanted = z;
+  if (garage.size() <= 0)
+  {
+    std::cout << "You have no cars with us. Buy one." << '\n';
+    std::cout << '\n';
+  }
+  else
+  {
+    std::cout << "Generating a report with a start date and end date for your cars now. (Printing)" << '\n';
+    std::cout << '\n';
+    std::cout << "-------------------------------------------" << '\n';
+    for (int i = 0; i < static_cast<int>(garage.size()); i++)
+    {
+      std::cout << "Car first purchased on the year of " << garage[i].getStartDate() << '\n'
+                << "The Cars end of payment date is the year of " << garage[i].getEndDate() << '\n'
+                << garage[i].getYear() << " "
+                << garage[i].getColor() << " "
+                << garage[i].getName() << '\n';
+      std::cout << garage[i].randomMileage << " miles on the vehicle currently" << '\n'
+                << garage[i].randomGasTank << "/10 tank full" << '\n'
+                << "The cars condition is: " << garage[i].carsHealth << '\n';
+      std::cout << '\n';
+    }
+    std::cout << "-------------------------------------------" << '\n';
+    std::cout << '\n';
+  }
 }
 
 void blackHawk::setActive( bool y ){
@@ -120,33 +251,49 @@ void blackHawk::setFeature( int x ){
   {
     case 1:
       std::cout << "Driving Mode Activated" << '\n';
+      std::cout << "You may now drive where ever you wish" << '\n';
       break;
     case 2:
       std::cout << "Hover Mode Activated" << '\n';
+      std::cout << "(You feel the wheels tuck into the car, and the jets start" << '\n';
+      std::cout << "You are now safely 10 feet above the ground. You may continue to drive now."
+                << "\n";
       break;
     case 3:
       std::cout << "Sail Mode Activated" << '\n';
+      std::cout << "(You feel the wheels tuck into the car, and the back propellor lower)" << '\n';
+      std::cout << "You are now safely floating in the water. You may continue to drive now." << '\n';
       break;
     case 4:
       std::cout << "Hide Mode Activated" << '\n';
+      std::cout << "(You notice the car begin to shine and then turn transparent.)" << '\n';
+      std::cout << "You are now hidden. No one can see inside or outside of the car. You may continue to drive at your own risk." << '\n';
       break;
     case 5:
       std::cout << "Protect Mode Activated" << '\n';
+      std::cout << "(You notice the a camera light turn on the hood and trunk)" << '\n';
+      std::cout << "AI is monitoring your surroundings. It will now move the car away from harm. You may continue to drive." << '\n';
       break;
     case 6:
       std::cout << "Air Conditioning Activated" << '\n';
+      std::cout << "(You feel nice cool hair hit you)" << '\n';
+      std::cout << "You may continue to drive now." << '\n';
       break;
     case 7:
       std::cout << "Windshield Wipers Activated" << '\n';
+      std::cout << "(The wiper begins to turn on intervals, brushing the rain away)" << '\n';
       break;
     case 8:
       std::cout << "Bluetooth Connect Activated" << '\n';
+      std::cout << "Your phone is now connected to the Media Player System." << '\n';
       break;
     case 9:
       std::cout << "Media Player Activated" << '\n';
+      std::cout << "(Your favorite driving playlist starts playing)" << '\n';
       break;
     case 10:
       std::cout << "Power Windows Activated" << '\n';
+      std::cout << "(The window lowers, and you feel the fresh air enter the car's cabin.)" << '\n';
       break;
     case 11:
       setPower( 0 );
@@ -183,9 +330,43 @@ void blackHawk::setPower(int x){
     std::cout << "Systems are shutting down..." << '\n';
     power = false;
     std::cout << "Returning to Main Menu." << '\n';
+    std::cout << '\n';
   }
   else {
-    exit( 1 );
+    std::cout << "Thank you for shopping with us at BlackHawk Inc." << '\n';
+    std::cout << "Goodbye." << '\n';
+    std::cout << '\n';
+    exit(1);
+  }
+}
+
+void blackHawk::setReport( int x , int y , int z ){
+  mileage = x;
+  gas = y;
+
+  if( z == 1 ){
+    startDate = 2023;
+    endDate = 2030;
+    carsHealth = "Brand New";
+  }
+  else if( z == 2 ){
+    startDate = 2023;
+    endDate = 2027;
+    carsHealth = "Used Car";
+  }
+  else if( z == 3 ){
+    startDate = 2023;
+    endDate = 2024;
+    carsHealth = "Car came from a car accident";
+  }
+  else if ( z == 4 ){
+    startDate = 2023;
+    endDate = 2023;
+    carsHealth = "Car is literally on fire right now";
+  }
+  else{
+    // default error message
+    setPurchase(-1);
   }
 }
 
@@ -214,6 +395,14 @@ int blackHawk::getYear(){
   return year;
 }
 
+int blackHawk::getStartDate(){
+  return startDate;
+}
+
+int blackHawk::getEndDate(){
+  return endDate;
+}
+
 std::string blackHawk::getColor(){
   return color;
 }
@@ -232,6 +421,4 @@ bool blackHawk::getPower(){
 
 bool blackHawk::getPurchase(){
   return purchase;
-
 }
-

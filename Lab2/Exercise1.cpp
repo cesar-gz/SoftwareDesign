@@ -1,4 +1,4 @@
-// implementation file?
+// implementation file
 #include "blackHawk.hpp"
 #include <iostream>
 
@@ -45,8 +45,12 @@ int main(){
       }
     }
     else if( client.option == 4 ){
+      // client has asked to generate a report
+      client.queryClient();
+    }
+    else if( client.option == 5 ){
       // client would like to end the session
-      break;
+      client.setPower(-1);
     }
     else{
       // default error message
@@ -56,4 +60,3 @@ int main(){
 
   return 0;
 }
-
