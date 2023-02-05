@@ -1,0 +1,7 @@
+.exe
+/Build.sh
+project_g++
+project_clang++
+Build.sh
+.sh
+**/Build.sh

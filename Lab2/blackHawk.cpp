@@ -2,13 +2,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <cstdlib> // for generating random numbers for setReport()
 
 #include "blackHawk.hpp"
 
 // blackHawk constructor
 blackHawk::blackHawk(){}
-
 
 blackHawk::blackHawk(int Year, std::string Color, std::string Name){
   customizeCar( Year, Color, Name );
@@ -23,19 +23,18 @@ int blackHawk::mainMenu()
     std::cout << "2) Compare my purchased cars" << '\n';
     std::cout << "3) Drive a purchased car (Test the Features)" << '\n';
     std::cout << "4) Generate a report for a car" << '\n';
-    std::cout << "5) Sell a car back to us for half the price" << '\n';
-    std::cout << "6) Leave the store" << '\n';
+    std::cout << "5) Leave the store" << '\n';
     std::cout << "Your choice: ";
     std::cin >> option;
     std::cout << '\n';
 
-    if( option == 1 || option == 2 || option == 3 || option == 4 || option == 5 || option == 6 )
+    if( option == 1 || option == 2 || option == 3 || option == 4 || option == 5 )
     {
       return option;
     }
     else
     {
-      std::cout << "Please enter 1, 2, 3, 4, 5, or 6." << '\n';
+      std::cout << "Please enter 1, 2, 3, 4, or 5." << '\n';
     }
   }
 }
@@ -112,6 +111,79 @@ void blackHawk::showCars(){
       std::cout << garage[i].getYear() << " " << garage[i].getColor() << " " << garage[i].getName() << '\n';
     }
     std::cout << '\n';
+
+    bool temp4 = false;
+    if (option == 2)
+    {
+      // I used this showCars() function twice in Exercise1.cpp, this is
+      // my way of separating what I want done in those two instances
+      temp4 = true;
+    }
+    while (temp4)
+    {
+      std::cout << "What would you like to compare?" << '\n'
+                << "(1) year, (2) mileage, (3) gas, (4)start date, (5)end date, (6) quit comparing" << '\n'
+                << "Enter the number to compare that value from least to highest" << '\n'
+                << "Your Choice: ";
+      std::cin >> value;
+      std::cout << '\n';
+
+      switch(value){
+        case 1:
+          std::cout << "The list of values sorted:" << '\n';
+          sort(garage.begin(), garage.end(), [](const blackHawk &lhs, const blackHawk &rhs){
+            return lhs.year < rhs.year; });
+          for (auto it = garage.begin(); it != garage.end(); it++)
+          {
+            std::cout << it->year << " year model for your car called " << it->name << '\n';
+          }
+          break;
+        case 2:
+          std::cout << "The list of values sorted:" << '\n';
+          sort(garage.begin(), garage.end(), [](const blackHawk &lhs, const blackHawk &rhs)
+               { return lhs.mileage < rhs.mileage; });
+          for (auto it = garage.begin(); it != garage.end(); it++)
+          {
+            std::cout << it->mileage << " miles for your car called " << it->name << '\n';
+          }
+          break;
+        case 3:
+          std::cout << "The list of values sorted:" << '\n';
+          sort(garage.begin(), garage.end(), [](const blackHawk &lhs, const blackHawk &rhs)
+               { return lhs.gas < rhs.gas; });
+          for (auto it = garage.begin(); it != garage.end(); it++)
+          {
+            std::cout << it->gas << "/10 of a tank full for your car called " << it->name << '\n';
+          }
+          break;
+        case 4:
+          std::cout << "The list of values sorted:" << '\n';
+          sort(garage.begin(), garage.end(), [](const blackHawk &lhs, const blackHawk &rhs)
+               { return lhs.startDate < rhs.startDate; });
+          for (auto it = garage.begin(); it != garage.end(); it++)
+          {
+            std::cout << it->startDate << " start date year for your car called " << it->name << '\n';
+          }
+          break;
+        case 5:
+          std::cout << "The list of values sorted:" << '\n';
+          sort(garage.begin(), garage.end(), [](const blackHawk &lhs, const blackHawk &rhs)
+               { return lhs.endDate < rhs.endDate; });
+          for (auto it = garage.begin(); it != garage.end(); it++)
+          {
+            std::cout << it->endDate << " end date year for your car called " << it->name  << '\n';
+          }
+          break;
+        case 6:
+          std::cout << "Returning to Main Menu" << '\n';
+          temp4 = false;
+          break;
+        default:
+          std::cout << "Please enter a valid value." << '\n';
+          std::cout << '\n';
+        }
+        std::cout << '\n';
+    }
   }
 }
 
@@ -401,6 +473,14 @@ int blackHawk::getStartDate(){
 
 int blackHawk::getEndDate(){
   return endDate;
+}
+
+int blackHawk::getMileage(){
+  return mileage;
+}
+
+int blackHawk::getGas(){
+  return gas;
 }
 
 std::string blackHawk::getColor(){

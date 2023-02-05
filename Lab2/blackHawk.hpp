@@ -15,6 +15,7 @@ class blackHawk{
     int  startDate;
     int  endDate;
     int  result;
+    int  value;
     std::string carsHealth;
     std::string color;
     std::string name;
@@ -50,6 +51,8 @@ class blackHawk{
     void  setReport( int x , int y , int z);
 
     int   getYear();
+    int   getMileage();
+    int   getGas();
     int   getFeature();
     int   getStartDate();
     int   getEndDate();
