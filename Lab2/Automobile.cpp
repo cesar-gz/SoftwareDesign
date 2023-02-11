@@ -317,17 +317,17 @@ void Automobile::setReport( int x , int y , int z ){
   else if( z == 2 ){
     startDate = 2022;
     endDate = 2027;
-    carsHealth = "Used Car";
+    carsHealth = "Used";
   }
   else if( z == 3 ){
     startDate = 2021;
     endDate = 2024;
-    carsHealth = "Car came from a car accident";
+    carsHealth = "vehicle came from a car accident";
   }
   else if ( z == 4 ){
     startDate = 2020;
     endDate = 2023;
-    carsHealth = "Car is literally on fire right now";
+    carsHealth = "vehicle is literally on fire right now";
   }
   else{
     // default error message

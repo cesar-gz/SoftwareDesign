@@ -1,11 +1,11 @@
 #pragma once
 #include "Automobile.hpp"
 
-class SemiTruck : public Automobile
+class tank : public Automobile
 {
 public:
-  SemiTruck();
-  SemiTruck(int YEAR, std::string COLOR, std::string NAME);
+  tank();
+  tank(int yr, std::string clr, std::string nm);
 
   void drive();
   void hover();
@@ -17,10 +17,10 @@ public:
   void turnOnMediaPlayer();
   void lowerWindows();
   void windshieldWipers();
-  void haulLoad();
+  void fireBazooka();
 
 protected:
-  int truckYear;
-  std::string truckColor;
-  std::string truckName;
+  int tankYear;
+  std::string tankColor;
+  std::string tankName;
 };
