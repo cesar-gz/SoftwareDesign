@@ -1,4 +1,3 @@
-
 # Lab 2 prompt for CPSC 462
 
 This is the professors prompt for his project assignment 2. This assignment was created with Linux, Ubuntu, and vs code.
