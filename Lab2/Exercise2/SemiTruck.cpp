@@ -1,77 +1,59 @@
 #include <iostream>
-#include "SemiTruck.hpp"
+#include <sstream>
+#include <string>
+#include <typeinfo> // typeid::name()
 
-SemiTruck::SemiTruck() {}
+#include "semiTruck.hpp"
 
-SemiTruck::SemiTruck(int YEAR, std::string COLOR, std::string NAME)
+// Generate a report with zero, 1, or 2 arguments.
+std::string semiTruck::generateReport(std::string query_start, std::string query_end)
 {
-  customizeCar(YEAR, COLOR, NAME);
+  std::string baseReport = Automobile::generateReport(query_start, query_end);
+
+  std::ostringstream report;
+
+  report << "Generating specialized semiTruck Report\n"
+         << "  Function called:  " << __func__ << " in " << typeid(*this).name() << '\n'
+         << "  Report period:  " << start << " through " << end << "\n\n\n\n";
+
+  std::clog << report.str();
+  return baseReport + report.str(); // concatenation
 }
 
-void SemiTruck::drive() {
-  std::cout << "Truck Driving Mode Activated" << '\n';
-  std::cout << "You are ready to drive long distances across the states."
-            << "\n\n";
-}
-void SemiTruck::hover()  {
-  std::cout << "Truck Hovering Mode Activated" << '\n';
-  std::cout << "(You feel the 18 wheels tuck into the truck, and the strong jets start" << '\n';
-  std::cout << "You are now somehow safely 10 feet above the ground. You may continue to truck now."
-            << "\n\n";
-}
-void SemiTruck::sail()  {
-  std::cout << "Truck Sailing Mode Activated" << '\n';
-  std::cout << "(You feel the 18 wheels tuck into the car, and the back yacht propellor lower)" << '\n';
-  std::cout << "You are now safely floating in the water. You may continue to truck now."
-            << "\n\n";
-}
-void SemiTruck::hide()
+void semiTruck::drive()
 {
-  std::cout << "Truck Hiding Mode Activated" << '\n';
-  std::cout << "(You notice the truck begin to shine and then turn transparent.)" << '\n';
-  std::cout << "You are now hidden. No one can see inside or outside of the truck. You may continue to truck at other's risk."
+  std::cout << "The truck horn blares, the air bags fill with air, you slowly start driving forward."
             << "\n\n";
 }
-void SemiTruck::protect()
+
+void semiTruck::hover()
 {
-  std::cout << "Truck Protection Mode Activated" << '\n';
-  std::cout << "(You notice the a camera light turn on the hood)" << '\n';
-  std::cout << "AI is monitoring your surroundings. It will now move the truck away from harm. Everyone should be scared."
+  std::cout << "The truck's 18 wheel start to hover, you slowly start driving over traffic."
             << "\n\n";
 }
-void SemiTruck::connectBluetooth()
+
+void semiTruck::sail()
 {
-  std::cout << "Bluetooth Connect Activated to the Truck" << '\n';
-  std::cout << "Your phone is now connected to the Truck's Media Player System."
+  std::cout << "The truck begins floating, you start sailing across the ocean."
             << "\n\n";
 }
-void SemiTruck::turnOnAC()
+
+void semiTruck::hide()
 {
-  std::cout << "Air Conditioning Activated inside the Truck's Cabin" << '\n';
-  std::cout << "(You feel nice cool hair hit you)" << '\n';
-  std::cout << "You may continue to truck now."
+  std::cout << "The truck turns invisible, you slowly start driving forward."
             << "\n\n";
 }
-void SemiTruck::turnOnMediaPlayer()
+
+void semiTruck::protect()
 {
-  std::cout << "Media Player Activated, Country's top 100 shows on the display." << '\n';
-  std::cout << "(Your favorite driving playlist starts playing)"
+  std::cout << "The truck horn blares, The AI starts watching traffic around you, then you slowly start driving forward."
             << "\n\n";
 }
-void SemiTruck::lowerWindows()
+
+void semiTruck::haul()
 {
-  std::cout << "Power Windows Activated, your dog looks out the window to get fresh air" << '\n';
-  std::cout << "(The window lowers, and you feel the fresh air enter the trucks's cabin.)"
+  std::cout << "You hook up the truck to the trailer, and starting hauling 40,000 lbs."
             << "\n\n";
 }
-void SemiTruck::windshieldWipers()
-{
-  std::cout << "Strong Windshield Wipers Activated" << '\n';
-  std::cout << "(The wiper begins to turn on intervals, brushing the rain, mud, and bugs away)"
-            << "\n\n";
-}
-void SemiTruck::haulLoad()
-{
-  std::cout << "You hook onto a trailer, release the brakes, and start driving with an added 40,000 lbs."
-            << "\n\n";
-}
+
+semiTruck::~semiTruck() = default;

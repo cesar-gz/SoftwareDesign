@@ -1,56 +1,30 @@
-// declaration file
 #pragma once
-#include <vector>
+
 #include <string>
 
-class Automobile{
+/**************************************************************************
+** An Abstract Class capturing the concepts of a generic Automobile
+**
+**************************************************************************/
+class Automobile
+{
+public:
 
-  public:
-    // constructors
-    Automobile();
-    Automobile(int year, std::string color, std::string name);
+  // create drive function
+  virtual void drive() = 0;
+  virtual void hover() = 0;
+  virtual void sail() = 0;
+  virtual void hide() = 0;
+  virtual void protect() = 0;
 
-    // 10  features
-    void drive();
-    void hover();
-    void sail();
-    void hide();
-    void protect();
-    void connectBluetooth();
-    void turnOnAC();
-    void turnOnMediaPlayer();
-    void lowerWindows();
-    void windshieldWipers();
+  // Generate a report with zero, 1, or 2 arguments.
+  virtual std::string generateReport(std::string start = "No Start Date Added", std::string end = "No End Date Added") = 0;
 
-    // setters
-    void  setFeature( int x );
-    void  setReport( int x , int y , int z);
-    void  setPower(int x);
+  virtual ~Automobile() = 0;
 
-    // getters
-    int   getYear();
-    int   getMileage();
-    int   getGas();
-    int   getStartDate();
-    int   getEndDate();
-    bool  getPower();
-    std::string getColor();
-    std::string getName();
+protected:
+  std::string start;
+  std::string end;
 
-    // misc
-    void generateReport();
-    void generateReport(bool x);
-    void generateReport(bool y, bool z);
-    void addToGarage(Automobile &x);
-    void showCars(int x);
-    void customizeCar(int Year, std::string Color, std::string Name);
-    void selectCar(int x);
-
-  protected:
-
-    // variables
-    int year, mileage, gas, randomMileage, randomGasTank, randomCondition, startDate, endDate, value;
-    std::string carsHealth, color, name;
-    bool power, startDateWanted, endDateWanted;
-    std::vector<Automobile> garage;
+private:
 };

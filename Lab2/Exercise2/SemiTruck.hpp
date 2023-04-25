@@ -1,26 +1,25 @@
 #pragma once
+
+#include <string>
+
 #include "Automobile.hpp"
 
-class SemiTruck : public Automobile
+/************************************************************************
+** A Concrete Class implementing the concepts of a generic Automobile
+**
+*************************************************************************/
+class semiTruck : public Automobile
 {
 public:
-  SemiTruck();
-  SemiTruck(int YEAR, std::string COLOR, std::string NAME);
+  void drive() override;
+  void hover() override;
+  void sail() override;
+  void hide() override;
+  void protect() override;
+  void haul();
 
-  void drive();
-  void hover();
-  void sail();
-  void hide();
-  void protect();
-  void connectBluetooth();
-  void turnOnAC();
-  void turnOnMediaPlayer();
-  void lowerWindows();
-  void windshieldWipers();
-  void haulLoad();
+  // Generate a report with zero, 1, or 2 arguments.  The default report period is 1 month prior to today up through today.
+  std::string generateReport(std::string start = "No Start Date Added", std::string end = "No End Date Added") override;
 
-protected:
-  int truckYear;
-  std::string truckColor;
-  std::string truckName;
+  virtual ~semiTruck() override;
 };

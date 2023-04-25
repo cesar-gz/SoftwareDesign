@@ -1,26 +1,25 @@
 #pragma once
+
+#include <string>
+
 #include "Automobile.hpp"
 
+/************************************************************************
+** A Concrete Class implementing the concepts of a generic Automobile
+**
+*************************************************************************/
 class tank : public Automobile
 {
 public:
-  tank();
-  tank(int yr, std::string clr, std::string nm);
+  void drive() override;
+  void hover() override;
+  void sail() override;
+  void hide() override;
+  void protect() override;
+  void fire();
 
-  void drive();
-  void hover();
-  void sail();
-  void hide();
-  void protect();
-  void connectBluetooth();
-  void turnOnAC();
-  void turnOnMediaPlayer();
-  void lowerWindows();
-  void windshieldWipers();
-  void fireBazooka();
+  // Generate a report with zero, 1, or 2 arguments.  The default report period is 1 month prior to today up through today.
+  std::string generateReport(std::string start = "No Start Date Added", std::string end = "No End Date Added") override;
 
-protected:
-  int tankYear;
-  std::string tankColor;
-  std::string tankName;
+  virtual ~tank() override;
 };

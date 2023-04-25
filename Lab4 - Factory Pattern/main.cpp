@@ -1,11 +1,9 @@
-#include "Automobile.hpp"
-#include "semiTruck.hpp"
-#include "tank.hpp"
+#include "System/Automobile.hpp"
 
 namespace
 {
   // Code to the interface
-  void use_my_automobiles(Automobile &myAuto)
+  void use_my_automobiles(System::Automobile &myAuto)
   {
     myAuto.generateReport();
     myAuto.generateReport("Nov 20 1995");
@@ -21,11 +19,9 @@ namespace
 
 int main()
 {
-  semiTruck Mack;
-  use_my_automobiles(Mack);
-  Mack.haul();
+  auto semiTruck = System::Automobile::placeOrder( "semiTruck" );
+  use_my_automobiles( *semiTruck );
 
-  tank Destroyer;
-  use_my_automobiles(Destroyer);
-  Destroyer.fire();
+  auto tank = System::Automobile::placeOrder( "tank" );
+  use_my_automobiles( *tank );
 }
