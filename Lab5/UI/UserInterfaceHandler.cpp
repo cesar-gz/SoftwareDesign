@@ -7,15 +7,9 @@
 #include "UI/SimpleUI.hpp"
 #include "UI/SystemDriverUI.hpp"
 
-
-
-
 namespace UI
 {
   UserInterfaceHandler::~UserInterfaceHandler() noexcept = default;
-
-
-
 
   std::unique_ptr<UserInterfaceHandler> UserInterfaceHandler::createUI()
   {
@@ -26,6 +20,5 @@ namespace UI
     if     ( requesedUI == "Simple UI"     ) return std::make_unique<UI::SimpleUI>      ();
     else if( requesedUI == "Contracted UI" ) return std::make_unique<UI::SystemDriverUI>();
 
-    throw BadUIRequest( "Unknown User Interface object requested: \"" + requesedUI + "\"\n  detected in function " + __func__);
   }
 }    // namespace UI
