@@ -1,4 +1,6 @@
 #include "Domain/Session/Session.hpp"
+#include "Domain/Reservation/ReservationHandler.hpp"
+#include "Domain/Reservation/Reservation.hpp"
 
 #include <string>
 #include <any>
@@ -18,6 +20,12 @@ namespace  // anonymous (private) working area
   STUB( resetAccount )
   STUB( returnBook   )
   STUB( shutdown     )
+
+  std::any findRooms(){
+    // for filterRoomAvailability()
+    auto Reservation = Domain::Reservation::ReservationHandler::placeOrder("apple");
+    Reservation.filterDateAvailability( 16, 31 );
+  }
 
 
   std::any checkoutBook( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
@@ -50,7 +58,7 @@ namespace Domain::Session
 
   SessionBase::~SessionBase() noexcept
   {
-    _logger << "Session \"" + _name + "\" shutdown successfully";
+    _logger << "End Session: \"" + _name + "\" shutdown successfully";
   }
 
 
@@ -117,10 +125,11 @@ namespace Domain::Session
 
   CustomerSession::CustomerSession( const UserCredentials & credentials ) : SessionBase( "Customer", credentials )
   {
-    _commandDispatch = { {"Checkout Book", checkoutBook},
-                         {"Help",          help        },
-                         {"Pay Fines",     payFines    },
-                         {"Return Book",   returnBook  } };
+    _commandDispatch = { { "Checkout Book", checkoutBook },
+                         { "Help", help },
+                         { "Pay Fines", payFines },
+                         { "Return Book", returnBook },
+                         { "Find Rooms", findRooms } };
   }
 
 

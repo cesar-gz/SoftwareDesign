@@ -1,5 +1,5 @@
 #include "Automobile.hpp"
-#include "semiTruck.hpp"
+#include "SemiTruck.hpp"
 #include "tank.hpp"
 
 namespace

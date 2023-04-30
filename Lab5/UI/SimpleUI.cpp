@@ -58,11 +58,14 @@ namespace UI
     {
       std::cin.ignore(  std::numeric_limits<std::streamsize>::max(), '\n' );
 
+      std::cout << "\nProvide Authentication credentials\n";
+
       std::cout << "  name: ";
       std::getline( std::cin, credentials.userName );
 
       std::cout << "  pass phrase: ";
       std::getline( std::cin, credentials.passPhrase );
+      std::cout << "\n";
 
       unsigned menuSelection;
       do
