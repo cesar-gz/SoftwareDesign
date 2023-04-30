@@ -105,7 +105,7 @@ namespace Domain::Session
 
   // 2) Now map the above system events to roles authorized to make such a request.  Many roles can request the same event, and many
   //    events can be requested by a single role.
-  AdministratorSession::AdministratorSession( const UserCredentials & credentials ) : SessionBase( "Administrator", credentials )
+  SystemAdministratorSession::SystemAdministratorSession( const UserCredentials & credentials ) : SessionBase( "System Administrator", credentials )
   {
     _commandDispatch = { {"Help",            help        },
                          {"Reset Account",   resetAccount},
@@ -115,7 +115,7 @@ namespace Domain::Session
 
 
 
-  BorrowerSession::BorrowerSession( const UserCredentials & credentials ) : SessionBase( "Borrower", credentials )
+  CustomerSession::CustomerSession( const UserCredentials & credentials ) : SessionBase( "Customer", credentials )
   {
     _commandDispatch = { {"Checkout Book", checkoutBook},
                          {"Help",          help        },
@@ -126,7 +126,7 @@ namespace Domain::Session
 
 
 
-  LibrarianSession::LibrarianSession( const UserCredentials & credentials ) : SessionBase( "Librarian", credentials )
+  HotelClerkSession::HotelClerkSession( const UserCredentials & credentials ) : SessionBase( "Hotel Clerk", credentials )
   {
     _commandDispatch = { {"Checkout Book", checkoutBook},
                          {"Collect Fines", collectFines},
@@ -137,7 +137,7 @@ namespace Domain::Session
 
 
 
-  ManagementSession::ManagementSession( const UserCredentials & credentials ) : SessionBase( "Management", credentials )
+  VendorSession::VendorSession( const UserCredentials & credentials ) : SessionBase( "Vendor", credentials )
   {
     _commandDispatch = { {"Bug People", bugPeople},
                          {"Help",       help} };

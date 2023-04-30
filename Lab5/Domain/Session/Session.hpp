@@ -25,7 +25,7 @@ namespace Domain::Session
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented
       ~SessionBase() noexcept override = 0;
 
-  protected: 
+  protected:
   public:  // Dispatched functions need access to these attributes, so for now make these public instead of protected
     // Types
     using DispatchTable = std::map<std::string, std::any (*)( Domain::Session::SessionBase &, const std::vector<std::string> & )>;
@@ -41,9 +41,9 @@ namespace Domain::Session
   };    // class SessionBase
 
 
-  struct AdministratorSession : SessionBase{ AdministratorSession( const UserCredentials & credentials ); };
-  struct BorrowerSession      : SessionBase{ BorrowerSession     ( const UserCredentials & credentials ); };
-  struct LibrarianSession     : SessionBase{ LibrarianSession    ( const UserCredentials & credentials ); };
-  struct ManagementSession    : SessionBase{ ManagementSession   ( const UserCredentials & credentials ); };
+  struct SystemAdministratorSession : SessionBase{ SystemAdministratorSession( const UserCredentials & credentials ); };
+  struct CustomerSession            : SessionBase{ CustomerSession           ( const UserCredentials & credentials ); };
+  struct HotelClerkSession          : SessionBase{ HotelClerkSession         ( const UserCredentials & credentials ); };
+  struct VendorSession              : SessionBase{ VendorSession             ( const UserCredentials & credentials ); };
 
 } // namespace Domain::Session

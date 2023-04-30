@@ -5,3 +5,5 @@ project_clang++
 Build.sh
 .sh
 **/Build.sh
+.vscode
+prof

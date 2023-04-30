@@ -25,14 +25,11 @@ namespace UI
       // Constructors
       SimpleUI();
 
-
       // Operations
       void launch() override;
 
-
       // Destructor
       ~SimpleUI() noexcept override;
-
 
     private:
       // These smart pointers hold pointers to lower architectural layer's interfaces
@@ -40,7 +37,6 @@ namespace UI
 
       std::unique_ptr<TechnicalServices::Logging::LoggerHandler>            _loggerPtr;
       TechnicalServices::Persistence::PersistenceHandler                  & _persistentData;
-
 
       // convenience reference object enabling standard insertion syntax
       // This line must be physically after the definition of _loggerPtr

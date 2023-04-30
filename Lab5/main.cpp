@@ -3,7 +3,7 @@
 
 #include "UI/UserInterfaceHandler.hpp"
 
-int main( /*int argc, char argv[] */ )
+int main()
 {
     std::cout << "\nHotel-Easy Reservation system initializing ...\n\n";
 

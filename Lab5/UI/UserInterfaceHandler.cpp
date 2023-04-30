@@ -5,7 +5,6 @@
 #include "TechnicalServices/Persistence/PersistenceHandler.hpp"
 
 #include "UI/SimpleUI.hpp"
-#include "UI/SystemDriverUI.hpp"
 
 namespace UI
 {
@@ -16,9 +15,7 @@ namespace UI
     auto & persistantData = TechnicalServices::Persistence::PersistenceHandler::instance();
     auto   requesedUI     = persistantData["Component.UI"];
 
-
-    if     ( requesedUI == "Simple UI"     ) return std::make_unique<UI::SimpleUI>      ();
-    else if( requesedUI == "Contracted UI" ) return std::make_unique<UI::SystemDriverUI>();
+    return std::make_unique<UI::SimpleUI>      ();
 
   }
 }    // namespace UI

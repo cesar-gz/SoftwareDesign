@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>       // unique_ptr
-#include <stdexcept>    // runtime_error
 
 namespace UI
 {

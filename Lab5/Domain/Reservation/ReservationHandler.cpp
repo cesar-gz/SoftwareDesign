@@ -1,8 +1,6 @@
 #include "Domain/Reservation/ReservationHandler.hpp"
 
-#include "TechnicalServices/Persistence/PersistenceHandler.hpp"
-
-namespace Domain::Resevation
+namespace Domain::Reservation
 {
   ReservationHandler::~ReservationHandler() noexcept = default;
 

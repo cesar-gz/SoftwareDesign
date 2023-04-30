@@ -1,8 +1,6 @@
 #include "Domain/Account/AccountHandler.hpp"
 
-#include "TechnicalServices/Persistence/PersistenceHandler.hpp"
-
-namespace Domain::AccountHandler
+namespace Domain::Account
 {
   AccountHandler::~AccountHandler() noexcept = default;
 

@@ -10,10 +10,6 @@
 #include "TechnicalServices/Logging/SimpleLogger.hpp"
 #include "TechnicalServices/Persistence/PersistenceHandler.hpp"
 
-
-
-
-
 namespace
 {
   // User defined manipulator with arguments that allows std::istream::ignore to be called "in-line" (chained)
@@ -50,7 +46,7 @@ namespace TechnicalServices::Persistence
 
 
     // Let's look for an adaptation data file, and if found load the contents.  Otherwise create some default values.
-    std::ifstream adaptationDataFile( "Library_System_AdaptableData.dat", std::ios::binary );
+    std::ifstream adaptationDataFile( "Hotel_Easy_System_AdaptableData.dat", std::ios::binary );
 
     if( adaptationDataFile.is_open() )
     {
@@ -70,7 +66,6 @@ namespace TechnicalServices::Persistence
       _adaptablePairs = { /* KEY */               /* Value*/
                           {"Component.Logger",    "Simple Logger"},
                           {"Component.UI",        "Simple UI"}
-//                        {"Component.UI",        "Contracted UI"}
                         };
     }
   }
@@ -88,7 +83,7 @@ namespace TechnicalServices::Persistence
 
   std::vector<std::string> SimpleDB::findRoles()
   {
-    return { "Borrower", "Librarian", "Administrator", "Management" };
+    return { "Customer", "Hotel Clerk", "System Administrator", "Vendor" };
   }
 
 
@@ -99,9 +94,9 @@ namespace TechnicalServices::Persistence
     static std::vector<UserCredentials> storedUsers =
     {
     // Username    Pass Phrase         Authorized roles
-      {"Tom",     "CPSC 462 Rocks!",  {"Borrower",     "Management"}},
-      {"Barbara", "Why am I here?",   {"Borrower"                  }},
-      {"Amanda",  "",                 {"Administrator"             }}
+      {"Cesar",     "1234",           {"Customer"                   }},
+      {"Steven",    "5678",           {"Hotel Clerk"                }},
+      {"Natalie",   "0000",           {"System Administrator"       }}
     };
 
     for( const auto & user : storedUsers ) if( user.userName == name ) return user;

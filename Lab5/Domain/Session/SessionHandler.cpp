@@ -51,10 +51,10 @@ namespace Domain::Session
         )
       {
         // 2) If authenticated user is authorized for the selected role, create a session specific for that role
-        if( credentials.roles[0] == "Borrower"      ) return std::make_unique<Domain::Session::BorrowerSession>     ( credentials );
-        if( credentials.roles[0] == "Librarian"     ) return std::make_unique<Domain::Session::LibrarianSession>    ( credentials );
-        if( credentials.roles[0] == "Administrator" ) return std::make_unique<Domain::Session::AdministratorSession>( credentials );
-        if( credentials.roles[0] == "Management"    ) return std::make_unique<Domain::Session::ManagementSession>   ( credentials );
+        if( credentials.roles[0] == "Customer"             ) return std::make_unique<Domain::Session::CustomerSession>     ( credentials );
+        if( credentials.roles[0] == "Hotel Clerk"          ) return std::make_unique<Domain::Session::HotelClerkSession>    ( credentials );
+        if( credentials.roles[0] == "System Administrator" ) return std::make_unique<Domain::Session::SystemAdministratorSession>( credentials );
+        if( credentials.roles[0] == "Vendor"               ) return std::make_unique<Domain::Session::VendorSession>   ( credentials );
 
         throw std::logic_error( "Invalid role requested in function " + std::string(__func__) ); // Oops, should never get here but ...  Throw something
       }
