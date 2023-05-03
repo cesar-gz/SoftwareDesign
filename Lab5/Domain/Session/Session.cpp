@@ -12,42 +12,31 @@ namespace  // anonymous (private) working area
   #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
                               { return {}; }  // Stubbed for now
 
+  STUB( updateGuestInfo )
+  STUB( updatePaymentInfo )
+  STUB( createReservation )
+  STUB( searchForReservation )
+  STUB( deleteReservation )
   STUB( bugPeople    )
   STUB( collectFines )
   STUB( help         )
   STUB( openArchives )
-  STUB( payFines     )
   STUB( resetAccount )
-  STUB( returnBook   )
   STUB( shutdown     )
 
-  std::any checkoutBook( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  std::any filterDateAvailability( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
-    // TO-DO  Verify there is such a book and the mark the book as being checked out by user
-    std::string results = "Title \"" + args[0] + "\" checkout by \"" + session._credentials.userName + '"';
-    session._logger << "checkoutBook:  " + results;
-    return { results };
-  }
-
-  std::any findRooms( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
-  {
-    /*auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
-    int  firstAvailable = room->filterDateAvailability( 16, 31 );
-    std::string results        = "The number is " + std::to_string( firstAvailable ) + args[0];
-    session._logger << "findRooms:  " + results;
-    return { results }; */
     auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
     if( room )
     {
       int         firstAvailable = room->filterDateAvailability( 21, 31 );
       std::string results        = "The number is " + std::to_string( firstAvailable );
-      session._logger << "findRooms:  " + results;
       return { results };
     }
     else
     {
       session._logger << "findRooms: Error creating room object";
-      std::string results = "Error inside findRooms()" + args[0];
+      std::string results = "Error inside findRooms(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }
@@ -133,6 +122,7 @@ namespace Domain::Session
   SystemAdministratorSession::SystemAdministratorSession( const UserCredentials & credentials ) : SessionBase( "System Administrator", credentials )
   {
     _commandDispatch = { {"Help",            help        },
+                         {"Open Archives",   openArchives},
                          {"Reset Account",   resetAccount},
                          {"Shutdown System", shutdown    } };
   }
@@ -142,11 +132,12 @@ namespace Domain::Session
 
   CustomerSession::CustomerSession( const UserCredentials & credentials ) : SessionBase( "Customer", credentials )
   {
-    _commandDispatch = { {"Checkout Book", checkoutBook},
-                         {"Pay Fines",     payFines    },
-                         {"Return Book",   returnBook  },
-                         {"Find Rooms",    findRooms   } };
-    //{ "Help", help },
+    _commandDispatch = { { "Find Room",              filterDateAvailability },
+                         { "Update my Info",         updateGuestInfo        },
+                         { "Pay Fines",              updatePaymentInfo      },
+                         { "Make Reservation",       createReservation      },
+                         { "Search for Reservation", searchForReservation   },
+                         { "Delete Reservation",     deleteReservation      } };
   }
 
 
@@ -154,10 +145,12 @@ namespace Domain::Session
 
   HotelClerkSession::HotelClerkSession( const UserCredentials & credentials ) : SessionBase( "Hotel Clerk", credentials )
   {
-    _commandDispatch = { {"Checkout Book", checkoutBook},
-                         {"Collect Fines", collectFines},
-                         {"Help",          help        },
-                         {"Open Archives", openArchives} };
+    _commandDispatch = { { "Find Room",              filterDateAvailability },
+                         { "Collect Fines",          collectFines           },
+                         { "Help",                   help                   },
+                         { "Make Reservation",       createReservation      },
+                         { "Search for Reservation", searchForReservation   },
+                         { "Delete Reservation",     deleteReservation      } };
   }
 
 
