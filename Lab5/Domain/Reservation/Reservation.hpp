@@ -7,10 +7,9 @@ namespace Domain::Reservation
   class ReservationBase : public ReservationHandler
   {
   public:
-    ReservationBase();
 
     int filterDateAvailability(int arrival, int departure) override;
 
-    ~ReservationBase() noexcept override = 0;
+    virtual ~ReservationBase() override;
   };
 }    // namespace Domain::Reservation

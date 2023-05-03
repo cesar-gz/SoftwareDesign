@@ -18,13 +18,13 @@ namespace Domain::Reservation
 
       // Destructor
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented
-      virtual ~ReservationHandler() noexcept = 0;
+      virtual ~ReservationHandler() = 0;
 
     protected:
       int arrival;
       int departure;
       int reservationNumber;
-      std::vector<int> roomsAvailable;
+      std::vector<int> roomsAvailable = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
 
       // Copy assignment operators, protected to prevent mix derived-type assignments
       ReservationHandler & operator=( const ReservationHandler & rhs ) = default;    // copy assignment

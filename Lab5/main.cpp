@@ -7,8 +7,6 @@ int main()
 {
     std::cout << "\nHotel-Easy Reservation system initializing ...\n\n";
 
-    // Smart pointer (for proper, exception safe memory management) to interface set to new instance of a configurable
-    // implementation of the interface.
     auto userInterface = UI::UserInterfaceHandler::createUI();
 
     std::cout << "\nInitialization completed successfully\n";

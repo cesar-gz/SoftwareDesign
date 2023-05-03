@@ -7,17 +7,19 @@
 namespace Domain::Reservation
 {
 
-  int ReservationHandler::filterDateAvailability( int arrival, int departure )
+  int ReservationHandler::filterDateAvailability( int arrival_day, int departure_day )
   {
-    std::cout << "Inside the Abstract Class Reservation Handler";
-    return 1;
+    int difference = arrival_day - departure_day;
+    return difference;
   }
 
   std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
   {
-   return std::make_unique<ReservationBase>();
+    if( order == "ReservationBase" ) return std::make_unique<ReservationBase>();
+    throw std::range_error( "Request to create an unknown automobile type:  " + std::string{ order } );
+
   }
 
-  ReservationHandler::~ReservationHandler() noexcept = default;
+  ReservationHandler::~ReservationHandler() = default;
 
 } // namespace Domain::Reservation

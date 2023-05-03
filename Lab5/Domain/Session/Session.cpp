@@ -21,20 +21,37 @@ namespace  // anonymous (private) working area
   STUB( returnBook   )
   STUB( shutdown     )
 
-  std::any findRooms(){
-    // for filterRoomAvailability()
-    auto Reservation = Domain::Reservation::ReservationHandler::placeOrder("apple");
-    Reservation.filterDateAvailability( 16, 31 );
-  }
-
-
   std::any checkoutBook( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     // TO-DO  Verify there is such a book and the mark the book as being checked out by user
     std::string results = "Title \"" + args[0] + "\" checkout by \"" + session._credentials.userName + '"';
     session._logger << "checkoutBook:  " + results;
-    return {results};
+    return { results };
   }
+
+  std::any findRooms( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  {
+    /*auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
+    int  firstAvailable = room->filterDateAvailability( 16, 31 );
+    std::string results        = "The number is " + std::to_string( firstAvailable ) + args[0];
+    session._logger << "findRooms:  " + results;
+    return { results }; */
+    auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
+    if( room )
+    {
+      int         firstAvailable = room->filterDateAvailability( 21, 31 );
+      std::string results        = "The number is " + std::to_string( firstAvailable );
+      session._logger << "findRooms:  " + results;
+      return { results };
+    }
+    else
+    {
+      session._logger << "findRooms: Error creating room object";
+      std::string results = "Error inside findRooms()" + args[0];
+      return { results };
+    }
+  }
+
 }    // anonymous (private) working area
 
 
@@ -125,11 +142,11 @@ namespace Domain::Session
 
   CustomerSession::CustomerSession( const UserCredentials & credentials ) : SessionBase( "Customer", credentials )
   {
-    _commandDispatch = { { "Checkout Book", checkoutBook },
-                         { "Help", help },
-                         { "Pay Fines", payFines },
-                         { "Return Book", returnBook },
-                         { "Find Rooms", findRooms } };
+    _commandDispatch = { {"Checkout Book", checkoutBook},
+                         {"Pay Fines",     payFines    },
+                         {"Return Book",   returnBook  },
+                         {"Find Rooms",    findRooms   } };
+    //{ "Help", help },
   }
 
 

@@ -6,25 +6,23 @@
 namespace Domain::Reservation
 {
 
-  ReservationBase::ReservationBase(){}
-
-  int ReservationBase::filterDateAvailability( int arrival, int departure )
+  int ReservationBase::filterDateAvailability( int arrival_day, int departure_day )
   {
-    std::vector<int> rooms;
-    int              lengthOfStay = departure - arrival;
+    std::vector<int> rooms(0,0);
+    int              lengthOfStay = departure_day - arrival_day;
 
     if( lengthOfStay > 10 )
     {
-      for( int i = 0; i < 5; i++ )
-      {
-        rooms.push_back( roomsAvailable[i] );
-      }
+      for( std::size_t i = 0; i < 5; i++ )
+        {
+          rooms.push_back( roomsAvailable[i] );
+        }
 
       std::cout << "Rooms Available: ";
-      for( int i = 0; i < rooms.size(); i++ )
-      {
-        std::cout << rooms[i] << " ";
-      }
+      for( std::size_t i = 0; i < rooms.size(); i++ )
+        {
+          std::cout << rooms[i] << " ";
+        }
       std::cout << std::endl;
 
       // return the first available room in the list
@@ -32,16 +30,16 @@ namespace Domain::Reservation
     }
     else
     {
-      for( int i = 14; i < 20; i++ )
-      {
-        rooms.push_back( roomsAvailable[i] );
-      }
+      for( std::size_t i = 14; i < 20; i++ )
+        {
+          rooms.push_back( roomsAvailable[i] );
+        }
 
       std::cout << "Rooms Available: ";
-      for( int i = 0; i < rooms.size(); i++ )
-      {
-        std::cout << rooms[i] << " ";
-      }
+      for( std::size_t i = 0; i < rooms.size(); i++ )
+        {
+          std::cout << rooms[i] << " ";
+        }
       std::cout << std::endl;
 
       // return the first available room in the list
@@ -49,6 +47,6 @@ namespace Domain::Reservation
     }
   }
 
-  ReservationBase::~ReservationBase() noexcept {}
+  ReservationBase::~ReservationBase() = default;
 
 }    // namespace Domain::Reservation
