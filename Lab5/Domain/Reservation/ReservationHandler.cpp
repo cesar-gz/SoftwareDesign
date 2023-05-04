@@ -13,7 +13,14 @@ namespace Domain::Reservation
     return difference;
   }
 
-  std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
+  int ReservationHandler::createReservation( int room_Num, std::string Guest_Name, int credit_Card )
+  {
+    int notImportant = credit_Card - room_Num;
+    std::string unImportant  = Guest_Name;
+    return notImportant;
+  }
+
+      std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
   {
     if( order == "ReservationBase" ) return std::make_unique<ReservationBase>();
     throw std::range_error( "Request to create an unknown class type:  " + std::string{ order } );

@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "Domain/Reservation/Reservation.hpp"
+#include "Domain/Account/Account.hpp"
 
 namespace Domain::Reservation
 {
@@ -48,6 +49,28 @@ namespace Domain::Reservation
     }
   }
 
-  ReservationBase::~ReservationBase() = default;
+  int ReservationBase::createReservation( int room_Num, std::string Guest_Name, int credit_Card )
+  {
+    char user_decision;
+    std::cout << "Using the information in Checkout, would you like to finalize and create a Reservation? (Y/N):"
+              << " ";
+    std::cin >> user_decision;
 
-}    // namespace Domain::Reservation
+    if(user_decision == 'Y')
+    {
+      if(room_Num == 15 && Guest_Name == "Cesar Gutierrez" && credit_Card == 123456789)
+      {
+        reservationNumber = 222;
+        return reservationNumber;
+      }
+      return -1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+    ReservationBase::~ReservationBase() = default;
+
+  }    // namespace Domain::Reservation

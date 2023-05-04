@@ -25,7 +25,7 @@ namespace Domain::Account
     std::string firstName;
     std::string lastName;
     std::string fullName;
-    int creditCardNumber;
+    int         creditCardNumber;
 
     // Copy assignment operators, protected to prevent mix derived-type assignments
     AccountHandler & operator=( const AccountHandler & rhs ) = default;    // copy assignment

@@ -14,7 +14,6 @@ namespace  // anonymous (private) working area
   #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
                               { return {}; }  // Stubbed for now
 
-  STUB( createReservation )
   STUB( searchForReservation )
   STUB( deleteReservation )
   STUB( bugPeople    )
@@ -24,12 +23,17 @@ namespace  // anonymous (private) working area
   STUB( resetAccount )
   STUB( shutdown     )
 
+  int      roomNum;
+  std::string Name;
+  int         creditCard;
+
   std::any findRoom( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
     if( room )
     {
       int         firstAvailable = room->findRoom( 0, 0 );
+      roomNum                    = firstAvailable;
       std::string results        = "Room " + std::to_string( firstAvailable ) + " has been added to your Checkout.\n";
       return { results };
     }
@@ -41,12 +45,15 @@ namespace  // anonymous (private) working area
     }
   }
 
+
+
   std::any updateGuestInfo( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     auto name = Domain::Account::AccountHandler::placeOrder( "AccountBase" );
     if( name )
     {
       std::string fullName = name->updateGuestInfo( "first","last" );
+      Name                 = fullName;
       std::string results  = "Success, " + fullName + ", your name has been added to your Checkout.\n ";
       return { results };
     }
@@ -58,18 +65,41 @@ namespace  // anonymous (private) working area
     }
   }
 
+
+
+
   std::any updatePaymentInfo( Domain::Session::SessionBase & session, const std::vector<std::string> & args ){
     auto number = Domain::Account::AccountHandler::placeOrder( "AccountBase" );
     if( number )
     {
       int cardNumber = number->updatePaymentInfo( 1 );
-      std::string results  = "Success, your payment information: " + std::to_string(cardNumber) + ", has been saved for Checkout.\n ";
+      creditCard          = cardNumber;
+      std::string results = "Success, your payment information: " + std::to_string( cardNumber ) + ", has been saved for Checkout.\n ";
       return { results };
     }
     else
     {
       session._logger << "updatePaymentInfo: Error creating account object";
       std::string results = "Error inside updatePaymentInfo(), also args[0] causing a seg fault" + args[0];
+      return { results };
+    }
+  }
+
+
+
+  std::any createReservation( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  {
+    auto resv = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
+    if( resv )
+    {
+      int resv_Number = resv->createReservation( roomNum, Name, creditCard );
+      std::string results = "Success your reservation was created. Your reservation number is " + std::to_string( resv_Number ) + ".\n";
+      return { results };
+    }
+    else
+    {
+      session._logger << "createReservation: Error creating room object";
+      std::string results = "Error inside createReservation(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }
@@ -168,7 +198,7 @@ namespace Domain::Session
     _commandDispatch = { { "Find Room",              findRoom               },
                          { "Update Guest Info",      updateGuestInfo        },
                          { "Update Payment Info",    updatePaymentInfo      },
-                         { "Make Reservation",       createReservation      },
+                         { "Create Reservation",       createReservation      },
                          { "Search for Reservation", searchForReservation   },
                          { "Delete Reservation",     deleteReservation      } };
   }

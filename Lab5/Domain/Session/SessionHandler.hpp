@@ -39,7 +39,6 @@ namespace Domain::Session
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented
       virtual ~SessionHandler() noexcept = 0;
 
-
     protected:
       // Copy assignment operators, protected to prevent mix derived-type assignments
       SessionHandler & operator=( const SessionHandler &  rhs ) = default;  // copy assignment
