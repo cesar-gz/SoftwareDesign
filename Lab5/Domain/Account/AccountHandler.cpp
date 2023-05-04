@@ -6,6 +6,11 @@
 
 namespace Domain::Account
 {
+  std::unique_ptr<AccountHandler> AccountHandler::placeOrder( std::string_view order )
+  {
+    if( order == "AccountBase" ) return std::make_unique<AccountBase>();
+    throw std::range_error( "Request to create an unknown class type:  " + std::string{ order } );
+  }
 
   std::string AccountHandler::updateGuestInfo( std::string first_Name, std::string last_Name )
   {
@@ -13,11 +18,8 @@ namespace Domain::Account
     return fullName;
   }
 
-  std::unique_ptr<AccountHandler> AccountHandler::placeOrder( std::string_view order )
-  {
-    if( order == "AccountBase" ) return std::make_unique<AccountBase>();
-    throw std::range_error( "Request to create an unknown class type:  " + std::string{ order } );
-
+  int AccountHandler::updatePaymentInfo( int creditCard_Number ){
+    return creditCard_Number;
   }
 
   AccountHandler::~AccountHandler() = default;

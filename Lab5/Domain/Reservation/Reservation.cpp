@@ -6,7 +6,7 @@
 namespace Domain::Reservation
 {
 
-  int ReservationBase::filterDateAvailability( int arrival_day, int departure_day )
+  int ReservationBase::findRoom( int arrival_day, int departure_day )
   {
     std::vector<int> rooms(0,0);
 

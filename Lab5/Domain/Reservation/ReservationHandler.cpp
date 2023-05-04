@@ -7,7 +7,7 @@
 namespace Domain::Reservation
 {
 
-  int ReservationHandler::filterDateAvailability( int arrival_day, int departure_day )
+  int ReservationHandler::findRoom( int arrival_day, int departure_day )
   {
     int difference = arrival_day - departure_day;
     return difference;

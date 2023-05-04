@@ -20,6 +20,26 @@ namespace Domain::Account
     return fullName;
   }
 
+  int AccountBase::updatePaymentInfo( int creditCard_Number){
+    std::cout << "Credit Card Number:" << " ";
+    std::cin >> creditCard_Number;
+
+    std::string str    = std::to_string( creditCard_Number );
+    int         length = static_cast<int>( str.length() );
+
+
+    if( length == 9 )
+    {
+      // save for later
+      creditCardNumber = creditCard_Number;
+      return creditCardNumber;
+    }
+    else{
+      std::cout << "Invalid Credit Card Number. Please Enter a valid Credit Card Number.\n" << " ";
+      return 0;
+    }
+  }
+
   AccountBase::~AccountBase() = default;
 
 }    // namespace Domain::Account

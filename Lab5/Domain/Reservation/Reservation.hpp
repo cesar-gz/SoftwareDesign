@@ -8,7 +8,7 @@ namespace Domain::Reservation
   {
   public:
 
-    int filterDateAvailability(int arrival, int departure) override;
+    int findRoom(int arrival, int departure) override;
 
     virtual ~ReservationBase() override;
   };

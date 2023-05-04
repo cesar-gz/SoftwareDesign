@@ -14,7 +14,7 @@ namespace Domain::Reservation
     public:
       static std::unique_ptr<ReservationHandler> placeOrder( std::string_view order );
 
-      virtual int filterDateAvailability( int arrival, int departure ) = 0;
+      virtual int findRoom( int arrival, int departure ) = 0;
 
       // Destructor
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented

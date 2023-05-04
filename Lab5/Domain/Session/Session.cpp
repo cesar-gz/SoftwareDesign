@@ -14,7 +14,6 @@ namespace  // anonymous (private) working area
   #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
                               { return {}; }  // Stubbed for now
 
-  STUB( updatePaymentInfo )
   STUB( createReservation )
   STUB( searchForReservation )
   STUB( deleteReservation )
@@ -25,19 +24,19 @@ namespace  // anonymous (private) working area
   STUB( resetAccount )
   STUB( shutdown     )
 
-  std::any filterDateAvailability( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  std::any findRoom( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
   {
     auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
     if( room )
     {
-      int         firstAvailable = room->filterDateAvailability( 0, 0 );
+      int         firstAvailable = room->findRoom( 0, 0 );
       std::string results        = "Room " + std::to_string( firstAvailable ) + " has been added to your Checkout.\n";
       return { results };
     }
     else
     {
       session._logger << "findRooms: Error creating room object";
-      std::string results = "Error inside filterDateAvailability(), also args[0] causing a seg fault" + args[0];
+      std::string results = "Error inside findRoom(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }
@@ -53,8 +52,24 @@ namespace  // anonymous (private) working area
     }
     else
     {
-      session._logger << "updateGuestInfo: Error creating room object";
+      session._logger << "updateGuestInfo: Error creating account object";
       std::string results = "Error inside updateGuestInfo(), also args[0] causing a seg fault" + args[0];
+      return { results };
+    }
+  }
+
+  std::any updatePaymentInfo( Domain::Session::SessionBase & session, const std::vector<std::string> & args ){
+    auto number = Domain::Account::AccountHandler::placeOrder( "AccountBase" );
+    if( number )
+    {
+      int cardNumber = number->updatePaymentInfo( 1 );
+      std::string results  = "Success, your payment information: " + std::to_string(cardNumber) + ", has been saved for Checkout.\n ";
+      return { results };
+    }
+    else
+    {
+      session._logger << "updatePaymentInfo: Error creating account object";
+      std::string results = "Error inside updatePaymentInfo(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }
@@ -150,9 +165,9 @@ namespace Domain::Session
 
   CustomerSession::CustomerSession( const UserCredentials & credentials ) : SessionBase( "Customer", credentials )
   {
-    _commandDispatch = { { "Find Room",              filterDateAvailability },
-                         { "Update my Info",         updateGuestInfo        },
-                         { "Pay Fines",              updatePaymentInfo      },
+    _commandDispatch = { { "Find Room",              findRoom               },
+                         { "Update Guest Info",      updateGuestInfo        },
+                         { "Update Payment Info",    updatePaymentInfo      },
                          { "Make Reservation",       createReservation      },
                          { "Search for Reservation", searchForReservation   },
                          { "Delete Reservation",     deleteReservation      } };
@@ -163,7 +178,7 @@ namespace Domain::Session
 
   HotelClerkSession::HotelClerkSession( const UserCredentials & credentials ) : SessionBase( "Hotel Clerk", credentials )
   {
-    _commandDispatch = { { "Find Room",              filterDateAvailability },
+    _commandDispatch = { { "Find Room",              findRoom               },
                          { "Collect Fines",          collectFines           },
                          { "Help",                   help                   },
                          { "Make Reservation",       createReservation      },
