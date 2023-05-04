@@ -1,6 +1,8 @@
 #include "Domain/Session/Session.hpp"
 #include "Domain/Reservation/ReservationHandler.hpp"
 #include "Domain/Reservation/Reservation.hpp"
+#include "Domain/Account/AccountHandler.hpp"
+#include "Domain/Account/Account.hpp"
 
 #include <string>
 #include <any>
@@ -12,7 +14,6 @@ namespace  // anonymous (private) working area
   #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
                               { return {}; }  // Stubbed for now
 
-  STUB( updateGuestInfo )
   STUB( updatePaymentInfo )
   STUB( createReservation )
   STUB( searchForReservation )
@@ -29,14 +30,31 @@ namespace  // anonymous (private) working area
     auto room = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
     if( room )
     {
-      int         firstAvailable = room->filterDateAvailability( 21, 31 );
-      std::string results        = "The number is " + std::to_string( firstAvailable );
+      int         firstAvailable = room->filterDateAvailability( 0, 0 );
+      std::string results        = "Room " + std::to_string( firstAvailable ) + " has been added to your Checkout.\n";
       return { results };
     }
     else
     {
       session._logger << "findRooms: Error creating room object";
-      std::string results = "Error inside findRooms(), also args[0] causing a seg fault" + args[0];
+      std::string results = "Error inside filterDateAvailability(), also args[0] causing a seg fault" + args[0];
+      return { results };
+    }
+  }
+
+  std::any updateGuestInfo( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  {
+    auto name = Domain::Account::AccountHandler::placeOrder( "AccountBase" );
+    if( name )
+    {
+      std::string fullName = name->updateGuestInfo( "first","last" );
+      std::string results  = "Success, " + fullName + ", your name has been added to your Checkout.\n ";
+      return { results };
+    }
+    else
+    {
+      session._logger << "updateGuestInfo: Error creating room object";
+      std::string results = "Error inside updateGuestInfo(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }

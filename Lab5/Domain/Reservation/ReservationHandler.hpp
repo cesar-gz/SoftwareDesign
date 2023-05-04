@@ -23,6 +23,7 @@ namespace Domain::Reservation
     protected:
       int arrival;
       int departure;
+      int roomNumber;
       int reservationNumber;
       std::vector<int> roomsAvailable = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
 

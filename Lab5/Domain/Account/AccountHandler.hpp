@@ -1,25 +1,34 @@
 #pragma once
 
+#include <any>
+#include <memory>    // unique_ptr
+#include <string>
+#include <string_view>
+#include <vector>
+
 namespace Domain::Account
 {
 
   class AccountHandler
   {
-    public:
-      // Operations
-      //   Work in progress ...
+  public:
+    static std::unique_ptr<AccountHandler> placeOrder( std::string_view order );
 
-      // Destructor
-      // Pure virtual destructor helps force the class to be abstract, but must still be implemented
-      virtual ~AccountHandler() noexcept = 0;
+    virtual std::string updateGuestInfo( std::string firstName, std::string lastName ) = 0;
 
+    // Destructor
+    // Pure virtual destructor helps force the class to be abstract, but must still be implemented
+    virtual ~AccountHandler() = 0;
 
-    protected:
-      // Copy assignment operators, protected to prevent mix derived-type assignments
-      AccountHandler & operator=( const AccountHandler & rhs ) = default;    // copy assignment
-      AccountHandler & operator=(       AccountHandler && rhs )= default;    // move assignment
+  protected:
+    std::string firstName;
+    std::string lastName;
+    std::string fullName;
 
+    // Copy assignment operators, protected to prevent mix derived-type assignments
+    AccountHandler & operator=( const AccountHandler & rhs ) = default;    // copy assignment
+    AccountHandler & operator=( AccountHandler && rhs )      = default;    // move assignment
 
   };    // class AccountHandler
 
-} // namespace Domain::Account
+}    // namespace Domain::Account
