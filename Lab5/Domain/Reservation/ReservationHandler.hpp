@@ -16,6 +16,7 @@ namespace Domain::Reservation
 
       virtual int findRoom( int arrival, int departure ) = 0;
       virtual int createReservation( int roomNum, std::string Name, int creditCard ) = 0;
+      virtual int searchForReservation( std::string fullName) = 0;
 
       // Destructor
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented
@@ -26,7 +27,8 @@ namespace Domain::Reservation
       int departure;
       int roomNumber;
       int reservationNumber;
-      std::vector<int> roomsAvailable = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+      std::string      fullName;
+      std::vector<int> roomsAvailable = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
       // Copy assignment operators, protected to prevent mix derived-type assignments
       ReservationHandler & operator=( const ReservationHandler & rhs ) = default;    // copy assignment

@@ -71,6 +71,21 @@ namespace Domain::Reservation
     }
   }
 
-    ReservationBase::~ReservationBase() = default;
+  int ReservationBase::searchForReservation(std::string full_Name)
+  {
+    char user_decision;
+    std::cout << "Did you provide us with your Full Name? (Y/N):" << " ";
+    std::cin >> user_decision;
+    if(user_decision == 'Y' && full_Name == "Cesar Gutierrez")
+    {
+      return 222;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  ReservationBase::~ReservationBase() = default;
 
   }    // namespace Domain::Reservation

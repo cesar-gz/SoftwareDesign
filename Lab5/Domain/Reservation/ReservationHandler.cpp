@@ -20,7 +20,19 @@ namespace Domain::Reservation
     return notImportant;
   }
 
-      std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
+  int ReservationHandler::searchForReservation( std::string full_Name )
+  {
+    if(full_Name == "Cesar Gutierrez")
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
   {
     if( order == "ReservationBase" ) return std::make_unique<ReservationBase>();
     throw std::range_error( "Request to create an unknown class type:  " + std::string{ order } );
