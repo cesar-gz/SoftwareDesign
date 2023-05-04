@@ -32,6 +32,11 @@ namespace Domain::Reservation
     }
   }
 
+  int ReservationHandler::deleteReservation( int reservationNum )
+  {
+    return reservationNum;
+  }
+
   std::unique_ptr<ReservationHandler> ReservationHandler::placeOrder( std::string_view order )
   {
     if( order == "ReservationBase" ) return std::make_unique<ReservationBase>();

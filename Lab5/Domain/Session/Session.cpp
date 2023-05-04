@@ -14,7 +14,6 @@ namespace  // anonymous (private) working area
   #define STUB(functionName)  std::any functionName( Domain::Session::SessionBase & /*session*/, const std::vector<std::string> & /*args*/ ) \
                               { return {}; }  // Stubbed for now
 
-  STUB( deleteReservation )
   STUB( bugPeople    )
   STUB( collectFines )
   STUB( help         )
@@ -116,6 +115,23 @@ namespace  // anonymous (private) working area
     {
       session._logger << "searchForReservation: Error creating room object";
       std::string results = "Error inside searchForReservation(), also args[0] causing a seg fault" + args[0];
+      return { results };
+    }
+  }
+
+  std::any deleteReservation( Domain::Session::SessionBase & session, const std::vector<std::string> & args )
+  {
+    auto remove = Domain::Reservation::ReservationHandler::placeOrder( "ReservationBase" );
+    if( remove )
+    {
+      reservationNum      = remove->deleteReservation( reservationNum );
+      std::string results = "Success, your reservation " + std::to_string( reservationNum ) + " was deleted.\n";
+      return { results };
+    }
+    else
+    {
+      session._logger << "deleteReservation: Error creating room object";
+      std::string results = "Error inside deleteReservation(), also args[0] causing a seg fault" + args[0];
       return { results };
     }
   }

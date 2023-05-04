@@ -86,6 +86,24 @@ namespace Domain::Reservation
     }
   }
 
+  int ReservationBase::deleteReservation(int reservationNum)
+  {
+    char user_decision;
+    std::cout << "Is " + std::to_string( reservationNum ) + " your Reservation Number? (Y/N) :";
+    std::cin >> user_decision;
+    if( user_decision == 'Y' )
+    {
+      reservationNum = 0;
+      return reservationNum;
+    }
+    else
+    {
+      std::cout << "Failed to delete reservation." << " ";
+      return reservationNum;
+    }
+  }
+
+
   ReservationBase::~ReservationBase() = default;
 
   }    // namespace Domain::Reservation

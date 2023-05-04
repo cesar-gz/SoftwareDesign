@@ -17,6 +17,7 @@ namespace Domain::Reservation
       virtual int findRoom( int arrival, int departure ) = 0;
       virtual int createReservation( int roomNum, std::string Name, int creditCard ) = 0;
       virtual int searchForReservation( std::string fullName) = 0;
+      virtual int deleteReservation( int reservationNumber) = 0;
 
       // Destructor
       // Pure virtual destructor helps force the class to be abstract, but must still be implemented
