@@ -125,7 +125,7 @@ namespace  // anonymous (private) working area
     if( remove )
     {
       reservationNum      = remove->deleteReservation( reservationNum );
-      std::string results = "Success, your reservation " + std::to_string( reservationNum ) + " was deleted.\n";
+      std::string results = "Success, your reservation was deleted.\n";
       return { results };
     }
     else
